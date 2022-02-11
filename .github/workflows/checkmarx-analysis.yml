@@ -34,6 +34,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
     - name: file checker
       run : |
+        pwd
         echo $GITHUB_WORKSPACE
         find . -type f | grep -i -E -o "\.\w*$" | sort | uniq -c
     - name: Checkmarx CxFlow Action
