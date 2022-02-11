@@ -30,6 +30,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: file checker
+      run : |
+        echo $GITHUB_WORKSPACE
+        find . -type f | grep -i -E -o "\.\w*$" | sort | uniq -c
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.3
       with:
