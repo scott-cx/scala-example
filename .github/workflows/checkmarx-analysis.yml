@@ -32,6 +32,11 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: ${{ github.event.pull_request.head.sha }}
+    - name: Check Content
+      run: |
+        echo "Checking Contents"
+        pwd
+        find . -type f | grep -i -E -o "\.\w*$" | sort | uniq -c
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.4
       with:
