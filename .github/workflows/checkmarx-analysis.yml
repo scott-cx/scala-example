@@ -35,13 +35,10 @@ jobs:
     - name: file checker
       run : |
         pwd
-        echo $GITHUB_WORKSPACE
         find . -type f | grep -i -E -o "\.\w*$" | sort | uniq -c
-        CXFILELIST=x`find . -type f -regex ".*\.\(apex\|apexp\|app\|asax\|ascx\|asp\|aspx\|bas\|c\|c++\|cbl\|cc\|cgi\|cls\|cmp\|cob\|component\|conf\|config\|cpp\|cpy\|cs\|cshtml\|ctl\|ctp\|cxx\|dll\|dsr\|ec\|eco\|erb\|evt\|frm\|go\|gradle\|groovy\|gsh\|gsp\|gtl\|gvy\|gy\|h\|h++\|handlebars\|hbs\|hh\|hpp\|htm\|html\|hxx\|inc\|jade\|jar\|java\|js\|jsf\|json\|jsp\|jspf\|jsx\|kt\|kts\|lock\|m\|master\|-meta.xml\|mf\|mustache\|object\|page\|pck\|pco\|php\|php3\|php4\|php5\|phtm\|phtml\|pkb\|pkh\|pks\|pl\|plist\|pls\|plx\|pm\|properties\|psgi\|pug\|py\|rb\|report\|rhtml\|rjs\|rxml\|scala\|sqb\|sql\|swift\|tag\|tgr\|tld\|tpl\|trigger\|ts\|tsx\|twig\|vb\|vbp\|vbs\|vm\|vue\|wod\|workflow\|xaml\|xhtml\|xib\|xml\|xsaccess\|xsapp\|xsjs\|xsjslib\)" | grep -i -E -o "\.\w*$" | sort | uniq -c`
-        echo $CXFILELIST
+        CXFILELIST=x`find . -type f -regex  ".*\.\(inc\|cs\|cshtml\|xaml\|aspx\|asax\|master\|ascx\|dll\|xml\|config\|aspx\|asax\|master\|tag\|ascx\|config\|java\|jsp\|jspf\|tag\|tld\|mf\|xml\|properties\|wod\|xhtml\|jsf\|vm\|gradle\|jspdsbld\|jar\|cpp\|c\|cc\|cxx\|c++\|ec\|h\|hh\|hxx\|h++\|hpp\|cmake\|pro\|txt\|ac\|am\|js\|jsx\|ts\|tsx\|xsjs\|xsjslib\|xsaccess\|xsapp\|xml\|app\|evt\|cmp\|html\|htm\|apexp\|page\|component\|html\|hbs\|handlebars\|aspx\|ascx\|cshtml\|jsf\|xhtml\|jsp\|jspf\|htm\|apexp\|page\|asp\|master\|json\|jade\|pug\|php\|vue\|app\|evt\|cmp\|apex\|cls\|apxc\|trigger\|tgr\|page\|apexp\|object\|component\|workflow\|report\|-meta.xml\|xml\|vb\|aspx\|master\|ascx\|xaml\|xml\|config\|vbs\|html\|htm\|asp\|cshtml\|aspx\|master\|ascx\|asp\|bas\|frm\|cls\|dsr\|ctl\|vbp\|php\|php3\|php4\|php5\|tpl\|ctp\|twig\|phtm\|phtml\|cgi\|rb\|rhtml\|erb\|lock\|rxml\|rjs\|cgi\|pl\|pm\|plx\|psgi\|cgi\|m\|h\|xib\|swift\|plist\|pls\|sql\|pkh\|pks\|pkb\|pck\|py\|gtl\|html\|xml\|csv\|latex\|tex\|txt\|groovy\|gvy\|gy\|gsh\|gsp\|gradle\|scala\|conf\|go\|kt\|kts\|xml\|mustache\|ftl\|cbl\|cob\|eco\|pco\|sqb\|cpy\|inc\|inc\|rpg\|rpg38\|sqlrpg\|rpgle\|sqlrpgle\)" | grep -i -E -o "\.\w*$" | sort | uniq -c`
         if [[ $CXFILELIST == 'x' ]]; then
-          echo "NO scannable files found"
-          exit 1
+          echo "Warning: no scannable files found"
         fi
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.3
