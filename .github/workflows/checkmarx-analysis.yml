@@ -30,18 +30,23 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: file checker
+      run : |
+        pwd
+        find . -type f | grep -i -E -o "\.\w*$" | sort | uniq -c
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.3
       with:
         project: ${{ github.repository }}-PR
         team: ${{ secrets.CHECKMARX_TEAMS }}
-        #team: CxServer
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}   # To be stored in GitHub Secrets.
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}  # To be stored in GitHub Secrets.
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}  # To be stored in GitHub Secrets.
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}  # To be stored in GitHub Secrets.
         incremental: false
-        break_build: false
+        break_build: true
         scanners: sast
         bug_tracker: GITHUBPULL
         params: --namespace=${{ github.repository_owner }}  --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --merge-id=${{ github.event.number }} --cx-flow.filterSeverity --cx-flow.filterCategory
